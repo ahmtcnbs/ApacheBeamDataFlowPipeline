@@ -6,9 +6,11 @@ from sys import argv
 PROJECT_ID = 'trainproject-326808'
 SCHEMA = 'sr:INTEGER,abv:FLOAT,id:INTEGER,name:STRING,style:STRING,ounces:FLOAT'
 
+# Missing value içermeyen verileri seçiyoruz.
 def discard_incomplete(data):
     return len(data['abv']) > 0 and len(data['id']) > 0 and len(data['name']) > 0 and len(data['style']) > 0
 
+# Uygun veri dönüşümlerini yapıyoruz.
 def convert_types(data):
     data['abv'] = float(data['abv']) if 'abv' in data else None
     data['id'] = int(data['id']) if 'id' in data else None
@@ -17,6 +19,7 @@ def convert_types(data):
     data['ounces'] = float(data['ounces']) if 'ounces' in data else None
     return data
 
+# İstemediğimiz değişkenleri kaldırıyoruz.
 def del_unwanted_cols(data):
     del data['ibu']
     del data['brewery_id']
